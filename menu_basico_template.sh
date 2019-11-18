@@ -9,7 +9,7 @@ LSB=/usr/bin/lsb_release
 # $1-> Message (optional)
 function pause(){
  local message="$@"
- [ -z $message ] && message="Press [Enter] key to continue..."
+ [ -z $message ] && message="Pulse [Enter] para continuar..."
  read -p "$message" readEnterKey
 }
  
@@ -17,15 +17,13 @@ function pause(){
 function show_menu(){
     date
     echo "---------------------------"
-    echo "  INFORMACION DEL SISTEMA  "
+    echo "   PROGRAMA -- PRINCIPAL   "
     echo "---------------------------"
- echo "1. Informacion del S.O."
- echo "2. Informacion del Hostname y dns"
- echo "3. Informacion network"
- echo "4. Usuarios conectados"
- echo "5. Ultimos usuarios conectados"
- echo "6. Informacion de la memoria"
- echo "7. Salir"
+ echo "Nombre    Indica el nombre del admin OpenLDAP"
+ echo "Servidor  Indica el nombre del servidor"
+ echo "Extension Indica la extensión del servidor"
+ echo "OrigenCSV Indica el nombre del fichero CSV a leer"
+ echo "Salir     Salir del script"
 }
  
 # Purpose - Display header message
@@ -38,8 +36,8 @@ function write_header(){
 }
  
 # Purpose - Get info about your operating system
-function os_info(){
- write_header " System information "
+function nombre(){
+ write_header " Nombre admin LDAP "
  echo "Operating system : $(uname)"
  [ -x $LSB ] && $LSB -a || echo "$LSB command is not insalled (set \$LSB variable)"
  #pause "Press [Enter] key to continue..."
@@ -47,7 +45,7 @@ function os_info(){
 }
  
 # Purpose - Get info about host such as dns, IP, and hostname
-function host_info(){
+function servidor(){
  local dnsips=$(sed -e '/^$/d' /etc/resolv.conf | awk '{if (tolower($1)=="nameserver") print $2}')
  write_header " Hostname and DNS information "
  echo "Hostname : $(hostname -s)"
@@ -59,7 +57,7 @@ function host_info(){
 }
  
 # Purpose - Network inferface and routing info
-function net_info(){
+function extension(){
  devices=$(netstat -i | cut -d" " -f1 | egrep -v "^Kernel|Iface|lo")
  write_header " Network information "
  echo "Total network interfaces found : $(wc -w <<<${devices})"
@@ -82,7 +80,7 @@ function net_info(){
  
 # Purpose - Display a list of users currently logged on 
 #           display a list of receltly loggged in users   
-function user_info(){
+function origencsv(){
  local cmd="$1"
  case "$cmd" in 
  who) write_header " Who is online "; who -H; pause ;;
