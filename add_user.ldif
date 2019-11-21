@@ -1,0 +1,14 @@
+dn: uid=$usuario, ou=$unidad_organizativa,dc=$pre_dominio,dc=$post_dominio
+objectClass: inetOrgPerson
+objectClass: posixAccount
+objectClass: shadowAccount
+cn: $usuario
+sn: $usuario
+uid: $usuario
+uidNumber: $num_user
+gidNumber: $group_number
+userPassword: $password
+homeDirectory: /home/$usuario
+loginShell: /bin/bash
+gecos: $usuario
+description: User account
