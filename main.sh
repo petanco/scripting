@@ -11,3 +11,4 @@ read -p "Escriba el nombre del dominio: " pre_dominio
 read -p "Escriba la extensión del dominio: " post_dominio
 read -p "Escriba el nombre del fichero CSV: " nom_csv
 #
+exit 0
