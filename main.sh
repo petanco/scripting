@@ -14,7 +14,6 @@ read -p "Escriba el nombre del fichero CSV: " nom_csv
 #
 
 # METEMOS EN LA VARIABLE number_uid_last EL VALOR DEL ULTIMO uidNumber para usarlo mas adelante 
-rm -dr /tmp/parseador_ldif/
 mkdir /tmp/parseador_ldif
 ldapsearch -H ldap://vitoria.gasteiz -x -LLL -b "dc=vitoria,dc=gasteiz" "(objectClass=posixAccount)" uidNumber > /tmp/parseador_ldif/uid_number_full
 sed -i '/^$/d' /tmp/parseador_ldif/uid_number_full #borrar lineas en blanco
@@ -54,6 +53,16 @@ while read num usuario unidad_organizativa descripcion
 $(cp /tmp/parseador_ldif/script_addUsers.ldif /tmp/parseador_ldif/first_last_entries_Before)
 sed -i '/^$/d' /tmp/parseador_ldif/first_last_entries_Before
 first_entryLDIF=$(head -14 /tmp/parseador_ldif/first_last_entries_Before >> /tmp/parseador_ldif/first_last_entries)
+echo "" >> /tmp/parseador_ldif/first_last_entries
 last_entryLDIF=$(tail -14 /tmp/parseador_ldif/first_last_entries_Before >> /tmp/parseador_ldif/first_last_entries)
 $(cat /tmp/parseador_ldif/first_last_entries)
+#end show first & last
+
+# count entries to be added
+$(grep -c ^$ /tmp/parseador_ldif/script_addUsers.ldif >> /tmp/parseador_ldif/total_entries)
+echo $(cat /tmp/parseador_ldif/total) " to be added"
+#end count
+#delete every temp filed used before exit
+$(rm -dr /tmp/parseador_ldif)
+#
 exit 0
