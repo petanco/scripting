@@ -51,8 +51,9 @@ while read num usuario unidad_organizativa descripcion
 # loop end
 
 # show first & last ldif entries
-sed -i '/^$/d' /tmp/parseador_ldif/script_addUsers.ldif >> /tmp/parseador_ldif/first_last_entries_Before
-first_entryLDIF=$(head -14 /tmp/parseador_ldif/first_last_entries_before >> /tmp/parseador_ldif/first_last_entries)
-last_entryLDIF=$(tail -14 /tmp/parseador_ldif/first_last_entries_before >> /tmp/parseador_ldif/first_last_entries)
+$(cp /tmp/parseador_ldif/script_addUsers.ldif /tmp/parseador_ldif/first_last_entries_Before)
+sed -i '/^$/d' /tmp/parseador_ldif/first_last_entries_Before
+first_entryLDIF=$(head -14 /tmp/parseador_ldif/first_last_entries_Before >> /tmp/parseador_ldif/first_last_entries)
+last_entryLDIF=$(tail -14 /tmp/parseador_ldif/first_last_entries_Before >> /tmp/parseador_ldif/first_last_entries)
 $(cat /tmp/parseador_ldif/first_last_entries)
 exit 0
