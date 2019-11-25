@@ -19,4 +19,4 @@ while [ $uid -lt 10 ]
       DONE
 exit 0
 # exit 0 indica que todo terminó bien
-# este comentario se para ver si funciona
+# este comentario se para ver si funcion
