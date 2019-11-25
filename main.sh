@@ -5,10 +5,6 @@
   let post_dominio
   let nom_csv
 # Declaramos las funciones que vamos a utilizar despues
-function ldif_loop() {
-        
-}
-#
 
 # Ahora pedimos al usuario los datos
 read -p "Escriba el nombre del administrador: " admin
