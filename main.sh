@@ -88,6 +88,7 @@ while read num usuario unidad_organizativa
         printf "\n"
         echo "description: User account of $usuario" >> /tmp/parseador_ldif/script_addUsers.ldif
         printf "\n" >> /tmp/parseador_ldif/script_addUsers.ldif
+        
       done <$INPUT
 IFS=$OLDIFS
 exit 0
