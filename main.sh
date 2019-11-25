@@ -4,6 +4,38 @@
   let pre_dominio
   let post_dominio
   let nom_csv
+# Declaramos las funciones que vamos a utilizar despues
+function ldif_loop() {
+      echo "dn: uid=$usuario,ou=$unidad_organizativa,dc=$pre_dominio,dc=$post_dominio" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "objectClass: inetOrgPerson" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "objectClass: posixAccount" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "objectClass: shadowAccount" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "cn: $usuario" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "sn: $usuario" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "uid: $usuario" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "uidNumber: $number_uid_last" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "gidNumber: 1" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "userPassword: $usuario" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "homeDirectory: /home/$usuario" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "loginShell: /bin/bash" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "gecos: $usuario" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "description: User account of $usuario" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n" >> /tmp/parseador_ldif/script_addUsers.ldif
+}
+
 #
 # Ahora pedimos al usuario los datos
 read -p "Escriba el nombre del administrador: " admin
@@ -11,33 +43,25 @@ read -p "Escriba el nombre del dominio: " pre_dominio
 read -p "Escriba la extensión del dominio: " post_dominio
 read -p "Escriba el nombre del fichero CSV: " nom_csv
 #
-INPUT = nom_csv
+# METEMOS EN LA VARIABLE number_uid_last EL VALOR DEL ULTIMO uidNumber para usarlo mas adelante 
+number_uid_last = /tmp/parseador_ldif/uid_number_full
+mkdir /tmp/parseador_ldif
+ldapsearch -H ldap://vitoria.gasteiz -x -LLL -b "dc=vitoria,dc=gasteiz" "(objectClass=posixAccount)" uidNumber > $number_uid_last
+sed -i '/^$/d' $number_uid_last
+tail -1 $number_uid_last | cut -d' ' -f2- > /tmp/parseador_ldif/uid_number_alone
+number_uid_last = $(cat /tmp/parseador_ldif/uid_number_alone)
+rm /tmp/parseador_ldif/*
+((number_uid_last=$number_uid_last+1))
+################################################################################################
 
+INPUT = nom_csv
 OLDIFS=$IFS
 IFS=','
 [ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
 while read num usuario unidad_organizativa
       do
-        ################
+        ldif_loop
       done < $INPUT
 IFS=$OLDIFS
-
-
-dn: uid=$usuario, ou=$unidad_organizativa,dc=$pre_dominio,dc=$post_dominio
-objectClass: inetOrgPerson
-objectClass: posixAccount
-objectClass: shadowAccount
-cn: $usuario
-sn: $usuario
-uid: $usuario
-uidNumber: $num_user
-gidNumber: $group_number
-userPassword: $usuario
-homeDirectory: /home/$usuario
-loginShell: /bin/bash
-gecos: $usuario
-description: User account
-
-
 
 exit 0
