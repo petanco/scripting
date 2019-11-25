@@ -60,9 +60,10 @@ $(cat /tmp/parseador_ldif/first_last_entries)
 
 # count entries to be added
 $(grep -c ^$ /tmp/parseador_ldif/script_addUsers.ldif >> /tmp/parseador_ldif/total_entries)
-echo $(cat /tmp/parseador_ldif/total) " to be added"
+echo $(cat /tmp/parseador_ldif/total_entries) " to be added"
 #end count
+
 #delete every temp filed used before exit
-$(rm -dr /tmp/parseador_ldif)
+$(rm -dr /tmp/parseador_ldif/)
 #
 exit 0
