@@ -15,7 +15,7 @@ while [ $uid -lt 10 ]:
           printf "\n" >> anadir_usuarios.ldif
           echo "uid: $uid"  >> anadir_usuarios.ldif
           printf "\n" >> anadir_usuarios.ldif
-          $uid++
+          ((uid=$uid+1))
       done
 exit 0
 # exit 0 indica que todo terminó bien
