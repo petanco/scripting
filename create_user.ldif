@@ -6,7 +6,6 @@ cn: leandro
 sn: leandro
 uid: leandro
 uidNumber: 1
-gidNumber: 1
 userPassword: leandro
 homeDirectory: /home/leandro
 loginShell: /bin/bash
