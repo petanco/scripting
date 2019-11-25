@@ -53,7 +53,7 @@ number_uid_last=$(cat /tmp/parseador_ldif/uid_number_alone)
 rm /tmp/parseador_ldif/*
 ((number_uid_last=$number_uid_last+1))
 ################################################################################################
-INPUT=nom_csv
+INPUT=$nom_csv
 OLDIFS=$IFS
 IFS=','
 [ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
