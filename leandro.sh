@@ -6,7 +6,7 @@ let usuario
 let o_u
 uid=1
 while [ $uid -lt 10 ]:
-      DO
+      do
           echo "dn: uid=$usuario, ou=$o_u,dc=pre_dominio,dc=post_dominio" > anadir_usuarios.ldif
           printf "\n" >> anadir_usuarios.ldif
           echo "cn: $usuario"  >> anadir_usuarios.ldif
@@ -16,7 +16,7 @@ while [ $uid -lt 10 ]:
           echo "uid: $uid"  >> anadir_usuarios.ldif
           printf "\n" >> anadir_usuarios.ldif
           $uid++
-      DONE
+      done
 exit 0
 # exit 0 indica que todo terminó bien
 # este comentario se para ver si funcion
