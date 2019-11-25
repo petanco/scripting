@@ -6,7 +6,7 @@ let usuario
 let o_u
 let uid
 
-$uid = 0
+$uid=0
 
 while [ $uid -lt 10 ]
       DO
@@ -18,7 +18,7 @@ while [ $uid -lt 10 ]
           printf "\n" >> anadir_usuarios.ldif
           echo "uid: $uid"  >> anadir_usuarios.ldif
           printf "\n" >> anadir_usuarios.ldif
-          $uid=$uid+1
+          $uid++
       DONE
 exit 0
 # exit 0 indica que todo terminó bien
