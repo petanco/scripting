@@ -8,11 +8,11 @@ uid_num=1
 while [ $uid_num -lt 10 ]
       do
           echo "dn: uid=$usuario, ou=$o_u,dc=pre_dominio,dc=post_dominio" >> anadir_usuarios.ldif
-          printf "\n" >> anadir_usuarios.ldif
+          printf "\n"
           echo "cn: $usuario"  >> anadir_usuarios.ldif
-          printf "\n" >> anadir_usuarios.ldif
+          printf "\n"
           echo "sn: $usuario"  >> anadir_usuarios.ldif
-          printf "\n" >> anadir_usuarios.ldif
+          printf "\n"
           echo "uid_num: $uid"  >> anadir_usuarios.ldif
           printf "\n" >> anadir_usuarios.ldif
           ((uid_num=$uid_num+1))
