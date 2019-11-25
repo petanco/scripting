@@ -6,7 +6,7 @@
   let nom_csv
 # Declaramos las funciones que vamos a utilizar despues
 function ldif_loop() {
-        password=$(slappasswd -h {SSHA} -s "$usuario")
+        password=$(slappasswd -h {SHA} -s "$usuario")
         echo "dn: uid=$usuario,ou=$unidad_organizativa,dc=$pre_dominio,dc=$post_dominio" >> /tmp/parseador_ldif/script_addUsers.ldif
         printf "\n"
         echo "objectClass: inetOrgPerson" >> /tmp/parseador_ldif/script_addUsers.ldif
