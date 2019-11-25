@@ -4,7 +4,7 @@
 #dialog --menu "Programa -- Principal" 0 0 0 'Nombre' "con cebolla" 'Servidor' "sin cebolla" 3 "con piminetos"
 let usuario
 let o_u
-uid = 1
+uid=1
 while [ $uid -lt 10 ]
       DO
           echo "dn: uid=$usuario, ou=$o_u,dc=pre_dominio,dc=post_dominio" > anadir_usuarios.ldif
