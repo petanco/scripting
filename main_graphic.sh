@@ -23,7 +23,7 @@ function display_output(){
 #
 
 #Iinfinte loop
-while true
+while true;
 do
 
 ### -- MAIN MENU -- ###
@@ -48,7 +48,7 @@ case $menuitem in
 	Extension) show_askExtent;;
 	CSV) show_askCSV;;
 	Siguiente) show_next;;
-	Salir) echo "¡Vuelva pronto!"; break;;
+	Salir) echo "¡Vuelva pronto!";;
 esac
 done
 
