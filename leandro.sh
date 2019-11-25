@@ -13,7 +13,7 @@ while [ $uid_num -lt 10 ]
           printf "\n"
           echo "sn: $usuario"  >> anadir_usuarios.ldif
           printf "\n"
-          echo "uid_num: $uid"  >> anadir_usuarios.ldif
+          echo "uid_num: $uid_num"  >> anadir_usuarios.ldif
           printf "\n" >> anadir_usuarios.ldif
           ((uid_num=$uid_num+1))
       done
