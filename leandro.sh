@@ -5,7 +5,7 @@
 usuario=Leandro
 o_u=miCasa
 uid_num=1
-while [ $uid -lt 10 ]:
+while [ $uid -lt 10 ]
       do
           echo "dn: uid=$usuario, ou=$o_u,dc=pre_dominio,dc=post_dominio" >> anadir_usuarios.ldif
           printf "\n" >> anadir_usuarios.ldif
