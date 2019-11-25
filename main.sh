@@ -29,7 +29,7 @@ INPUT=$nom_csv
 OLDIFS=$IFS
 IFS=';'
 [ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
-while read num usuario unidad_organizativa
+while read num usuario unidad_organizativa descripcion
       do
         password=$(slappasswd -h {SHA} -s "$usuario")
         echo "dn: uid=$usuario,ou=$unidad_organizativa,dc=$pre_dominio,dc=$post_dominio" >> /tmp/parseador_ldif/script_addUsers.ldif        
@@ -45,7 +45,7 @@ while read num usuario unidad_organizativa
         echo "homeDirectory: /home/$usuario" >> /tmp/parseador_ldif/script_addUsers.ldif     
         echo "loginShell: /bin/bash" >> /tmp/parseador_ldif/script_addUsers.ldif        
         echo "gecos: $usuario" >> /tmp/parseador_ldif/script_addUsers.ldif
-        echo "description: User account of $usuario" >> /tmp/parseador_ldif/script_addUsers.ldif
+        echo "description: $descripcion" >> /tmp/parseador_ldif/script_addUsers.ldif
         printf "\n" >> /tmp/parseador_ldif/script_addUsers.ldif
         ((number_uid_last=$number_uid_last+1))
       done <$INPUT
