@@ -44,11 +44,11 @@ read -p "Escriba la extensión del dominio: " post_dominio
 read -p "Escriba el nombre del fichero CSV: " nom_csv
 #
 # METEMOS EN LA VARIABLE number_uid_last EL VALOR DEL ULTIMO uidNumber para usarlo mas adelante 
-number_uid_last = /tmp/parseador_ldif/uid_number_full
+rm -dr /tmp/parseador_ldif/
 mkdir /tmp/parseador_ldif
-ldapsearch -H ldap://vitoria.gasteiz -x -LLL -b "dc=vitoria,dc=gasteiz" "(objectClass=posixAccount)" uidNumber > $number_uid_last
-sed -i '/^$/d' $number_uid_last
-tail -1 $number_uid_last | cut -d' ' -f2- > /tmp/parseador_ldif/uid_number_alone
+ldapsearch -H ldap://vitoria.gasteiz -x -LLL -b "dc=vitoria,dc=gasteiz" "(objectClass=posixAccount)" uidNumber > /tmp/parseador_ldif/uid_number_full
+sed -i '/^$/d' /tmp/parseador_ldif/uid_number_full
+tail -1 /tmp/parseador_ldif/uid_number_full | cut -d' ' -f2- > /tmp/parseador_ldif/uid_number_alone
 number_uid_last = $(cat /tmp/parseador_ldif/uid_number_alone)
 rm /tmp/parseador_ldif/*
 ((number_uid_last=$number_uid_last+1))
