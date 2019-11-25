@@ -1,14 +1,14 @@
-dn: uid=leandro, ou=nunavut,dc=vitoria,dc=gasteiz
+dn: uid=lucas, ou=Nunavut,dc=vitoria,dc=gasteiz
 objectClass: inetOrgPerson
 objectClass: posixAccount
 objectClass: shadowAccount
-cn: leandro
-sn: leandro
-uid: leandro
-uidNumber: 1
+cn: lucas
+sn: lucas
+uid: lucas
+uidNumber: 2
 gidNumber: 1
-userPassword: leandro
-homeDirectory: /home/leandro
+userPassword: lucas
+homeDirectory: /home/lucas
 loginShell: /bin/bash
-gecos: leandro
+gecos: lucas
 description: User account
