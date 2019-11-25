@@ -1,0 +1,7 @@
+dn: ou=Nunavut,dc=vitoria,dc=gasteiz
+objectClass: organizationalUnit
+ou: nunavut
+
+dn: ou=Northwest_Territories,dc=vitoria,dc=gasteiz
+objectClass: organizationalUnit
+ou: Northwest_Territories
