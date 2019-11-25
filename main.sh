@@ -59,7 +59,35 @@ IFS=','
 [ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
 while read num usuario unidad_organizativa
       do
-        ldif_loop
+        password=$(slappasswd -h {SHA} -s "$usuario")
+        echo "dn: uid=$usuario,ou=$unidad_organizativa,dc=$pre_dominio,dc=$post_dominio" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "objectClass: inetOrgPerson" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "objectClass: posixAccount" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "objectClass: shadowAccount" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "cn: $usuario" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "sn: $usuario" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "uid: $usuario" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "uidNumber: $number_uid_last" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "gidNumber: 1" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "userPassword: $password" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "homeDirectory: /home/$usuario" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "loginShell: /bin/bash" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "gecos: $usuario" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n"
+        echo "description: User account of $usuario" >> /tmp/parseador_ldif/script_addUsers.ldif
+        printf "\n" >> /tmp/parseador_ldif/script_addUsers.ldif
       done <$INPUT
 IFS=$OLDIFS
 exit 0
