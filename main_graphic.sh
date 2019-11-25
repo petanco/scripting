@@ -8,7 +8,7 @@ INPUT=/tmp/menu.sh.$$
 # trap and delete temp files
 trap "rm $OUTPUT; rm $INPUT; exit" SIGHUP SIGINT SIGTERM
 
-#Displat output using msgbox
+#Display output using msgbox
 # $1 -> set msgbox height
 # $2 -> set msgbox width
 # $3 -> set msgbox title
@@ -72,7 +72,7 @@ read -p "Escriba el nombre del fichero CSV: " nom_csv
 
 # METEMOS EN LA VARIABLE number_uid_last EL VALOR DEL ULTIMO uidNumber para usarlo mas adelante
 mkdir /tmp/parseador_ldif
-ldapsearch -H ldap://vitoria.gasteiz -x -LLL -b "dc=vitoria,dc=gasteiz" "(objectClass=posixAccount)" uidNumber > /tmp/parseador_ldif/uid_number_full
+#ldapsearch -H ldap://vitoria.gasteiz -x -LLL -b "dc=vitoria,dc=gasteiz" "(objectClass=posixAccount)" uidNumber > /tmp/parseador_ldif/uid_number_full
 sed -i '/^$/d' /tmp/parseador_ldif/uid_number_full #borrar lineas en blanco
 tail -1 /tmp/parseador_ldif/uid_number_full | cut -d' ' -f2- > /tmp/parseador_ldif/uid_number_alone #borrar primera palabra
 number_uid_last=$(cat /tmp/parseador_ldif/uid_number_alone)
