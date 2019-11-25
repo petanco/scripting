@@ -17,8 +17,8 @@ read -p "Escriba el nombre del fichero CSV: " nom_csv
 rm -dr /tmp/parseador_ldif/
 mkdir /tmp/parseador_ldif
 ldapsearch -H ldap://vitoria.gasteiz -x -LLL -b "dc=vitoria,dc=gasteiz" "(objectClass=posixAccount)" uidNumber > /tmp/parseador_ldif/uid_number_full
-sed -i '/^$/d' /tmp/parseador_ldif/uid_number_full
-tail -1 /tmp/parseador_ldif/uid_number_full | cut -d' ' -f2- > /tmp/parseador_ldif/uid_number_alone
+sed -i '/^$/d' /tmp/parseador_ldif/uid_number_full #borrar lineas en blanco
+tail -1 /tmp/parseador_ldif/uid_number_full | cut -d' ' -f2- > /tmp/parseador_ldif/uid_number_alone #borrar primera palabra
 number_uid_last=$(cat /tmp/parseador_ldif/uid_number_alone)
 rm /tmp/parseador_ldif/*
 ((number_uid_last=$number_uid_last+1))
@@ -26,7 +26,6 @@ rm /tmp/parseador_ldif/*
 
 # loop to create .ldif
 INPUT=$nom_csv
-OLDIFS=$IFS
 IFS=';'
 [ ! -f $INPUT ] && { echo "$INPUT file not found"; exit 99; }
 while read num usuario unidad_organizativa descripcion
@@ -49,5 +48,11 @@ while read num usuario unidad_organizativa descripcion
         printf "\n" >> /tmp/parseador_ldif/script_addUsers.ldif
         ((number_uid_last=$number_uid_last+1))
       done <$INPUT
-IFS=$OLDIFS
+# loop end
+
+# show first & last ldif entries
+sed -i '/^$/d' /tmp/parseador_ldif/script_addUsers.ldif >> /tmp/parseador_ldif/first_last_entries_Before
+first_entryLDIF=$(head -14 /tmp/parseador_ldif/first_last_entries_before >> /tmp/parseador_ldif/first_last_entries)
+last_entryLDIF=$(tail -14 /tmp/parseador_ldif/first_last_entries_before >> /tmp/parseador_ldif/first_last_entries)
+$(cat /tmp/parseador_ldif/first_last_entries)
 exit 0
