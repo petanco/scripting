@@ -91,9 +91,9 @@ function continuar(){
 				if  [ $answer_option -eq 0 ]
 					then
 						# get last uidNumber of ldap to start from that one
-							ldapsearch -H ldap://$vDominio.$vExtension -x -LLL -b "dc=$vDominio,dc=$vExtension" "(objectClass=posixAccount)" uidNumber > /tmp/parseador_ldif.$$/uid.$$
-							sed -i '/^$/d' /tmp/parseador_ldif.$$/uid.$$ #borrar lineas en blanco
-							tail -1 /tmp/parseador_ldif.$$/uid.$$ | cut -d' ' -f2- 2> $OUTPUT #borrar primera palabra
+							ldapsearch -H ldap://$vDominio.$vExtension -x -LLL -b "dc=$vDominio,dc=$vExtension" "(objectClass=posixAccount)" uidNumber > /tmp/parseador_ldif.$$/uid
+							sed -i '/^$/d' /tmp/parseador_ldif.$$/uid #borrar lineas en blanco
+							tail -1 /tmp/parseador_ldif.$$/uid | cut -d' ' -f2- 2> $OUTPUT #borrar primera palabra
 							number_uid_last=$(cat $OUTPUT)
 							((number_uid_last=$number_uid_last+1))
 						# end_last_uidNumber
