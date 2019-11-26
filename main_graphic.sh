@@ -1,6 +1,5 @@
 #!/bin/bash
 #Programa con interfaz grafica para el usuario %DUMB%
-#Empty on purpose
 
 # carpeta temporal y variables
 $(mkdir /tmp/parseador_ldif.$$)
@@ -37,7 +36,7 @@ while true; do
 	Continuar "Si ha rellenado todo, click aqui" \
 	Salir "Salir del programa" 2>"${INPUT}"
 
-	selection=$(<"${INPUT}")
+	selection=$(cat $INPUT)
 
   case $selection in
     Admin)
