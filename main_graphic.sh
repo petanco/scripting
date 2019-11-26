@@ -91,9 +91,9 @@ function continuar(){
 				if  [ $answer_option -eq 0 ]
 					then
 						# get last uidNumber of ldap to start from that one
-							ldapsearch -H ldap://$vDominio.$vExtension -x -LLL -b "dc=$vDominio,dc=$vExtension" "(objectClass=posixAccount)" uidNumber 2> $OUTPUT
+							ldapsearch -H ldap://$vDominio.$vExtension -x -LLL -b "dc=$vDominio,dc=$vExtension" "(objectClass=posixAccount)" uidNumber > $OUTPUT
 							sed -i '/^$/d' $OUTPUT #borrar lineas en blanco
-							tail -1 $OUTPUT | cut -d' ' -f2- 2> $OUTPUt #borrar primera palabra
+							tail -1 $OUTPUT | cut -d' ' -f2- 2> $OUTPUT #borrar primera palabra
 							number_uid_last=$(cat $OUTPUT)
 							((number_uid_last=$number_uid_last+1))
 						# end_last_uidNumber
@@ -133,7 +133,7 @@ function continuar(){
 							echo "" >> /tmp/parseador_ldif.$$/first_last_entries
 							echo "[ENTRADAS TOTALES DEL .ldif]" >> /tmp/parseador_ldif.$$/first_last_entries
 							# count entries to be added
-								$(grep -c ^$ /tmp/parseador_ldif.$$/script_addUsers.ldif >> /tmp/parseador_ldif.$$/first_last_entries)					
+								$(grep -c ^$ /tmp/parseador_ldif.$$/script_addUsers.ldif >> /tmp/parseador_ldif.$$/first_last_entries)
 							#end count
 						#end show first & last
 						dialog  --clear \
@@ -148,7 +148,7 @@ function continuar(){
 							--title "[ L A S T - C H E C K ]" \
 							--backtitle "$backtitle" \
 							--exit-label "Salir" \
-							--textbox $check_last 40 70					
+							--textbox $check_last 40 70
 				fi
 		fi
 	fi
