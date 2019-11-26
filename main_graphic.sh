@@ -91,11 +91,11 @@ function continuar(){
 				if  [ $answer_option -eq 0 ]
 					then
 						# get last uidNumber of ldap to start from that one
-							ldapsearch -H ldap://$vDominio.$vExtension -x -LLL -b "dc=$vDominio,dc=$vExtension" "(objectClass=posixAccount)" uidNumber > /tmp/parseador_ldif.$$/uid
-							sed -i '/^$/d' /tmp/parseador_ldif.$$/uid #borrar lineas en blanco
-							tail -1 /tmp/parseador_ldif.$$/uid | cut -d' ' -f2- 2> $OUTPUT #borrar primera palabra
-							number_uid_last=$(cat $OUTPUT)
-							((number_uid_last=$number_uid_last+1))
+						ldapsearch -H ldap://$vDominio.$vExtension -x -LLL -b "dc=$vDominio,dc=$vExtension" "(objectClass=posixAccount)" uidNumber > /tmp/parseador_ldif.$$/uid_number_full.$$
+						sed -i '/^$/d' /tmp/parseador_ldif.$$/uid_number_full.$$ #borrar lineas en blanco
+						tail -1 /tmp/parseador_ldif.$$/uid_number_full.$$ | cut -d' ' -f2- > /tmp/parseador_ldif.$$/uid_number_alone.$$ #borrar primera palabra
+						number_uid_last=$(cat /tmp/parseador_ldif.$$/uid_number_alone.$$)
+						((number_uid_last=$number_uid_last+1))
 						# end_last_uidNumber
 
 						# loop to create .ldif
@@ -142,8 +142,8 @@ function continuar(){
 							--exit-label "Atrás" \
 							--textbox /tmp/parseador_ldif.$$/first_last_entries 40 70
 						#ldapadd -x -D cn=$vAdmin,dc=$vDominio,dc=$vExtension -W -f /tmp/parseador_ldif.$$/script_addUsers.ldif
-						slapcat > $OUTPUT
-						check_last=$(tail -44 $OUTPUT)
+						slapcat > /tmp/parseador_ldif.$$/slpcat.$$
+						check_last=$(tail -44 /tmp/parseador_ldif.$$/slpcat.$$)
 						dialog  --clear \
 							--title "[ L A S T - C H E C K ]" \
 							--backtitle "$backtitle" \
