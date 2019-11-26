@@ -1,4 +1,3 @@
-
 #!/bin/bash
 #Programa con interfaz grafica para el usuario %DUMB%
 #Empty on purpose
@@ -65,4 +64,5 @@ while true; do
       fi
       ;;
   esac
+done
 exit 0
