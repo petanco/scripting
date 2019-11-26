@@ -1,14 +1,14 @@
-dn: uid=$usuario, ou=$unidad_organizativa,dc=$pre_dominio,dc=$post_dominio
+dn: uid=pepe, ou=nunavut,dc=vitoria,dc=gasteiz
 objectClass: inetOrgPerson
 objectClass: posixAccount
 objectClass: shadowAccount
-cn: $usuario
-sn: $usuario
-uid: $usuario
-uidNumber: $num_user
-gidNumber: $group_number
-userPassword: $password
-homeDirectory: /home/$usuario
+cn: pepe
+sn:  pepe
+uid:  pepe
+uidNumber: 5
+gidNumber: 1
+userPassword:  pepe
+homeDirectory: /home/ pepe
 loginShell: /bin/bash
-gecos: $usuario
+gecos:  pepe
 description: User account
