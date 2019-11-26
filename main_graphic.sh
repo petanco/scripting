@@ -22,22 +22,24 @@ while true; do
 		--title "[ M E N U ]" \
 		--clear \
 		--cancel-label "Salir" \
-		--menu "Por favor seleccione:"	$HEIGHT $WIDTH 4 \
-		"1" "Ver info sistem" \
-		"2" "Ver espacio en disco" \
-		"3" "Display Home Space Utilization" \
+		--menu "Seleccione las siguientes opciones:"	$HEIGHT $WIDTH 5 \
+		"Admin" "Indique nombre del administrador el dominio" \
+		"Servidor" "Indique nombre del servidor" \
+		"Extensión" "Indique nombre de la extensión del dominio" \
+		"CSV" "Indique la ubicación del fichero .csv con los datos" \
+		"Continuar" "Si ha rellenado todo, click aqui" \
 	2>&1 1>&3)
   exit_status=$?
   exec 3>&-
   case $exit_status in
     $DIALOG_CANCEL)
       clear
-      echo "Program terminated."
+      echo "Programa terminado."
       exit
       ;;
     $DIALOG_ESC)
       clear
-      echo "Program aborted." >&2
+      echo "Programa cancelado." >&2
       exit 1
       ;;
   esac
@@ -45,16 +47,25 @@ while true; do
     0 )
       clear
       echo "Program terminated."
+
       ;;
-    1 )
+    "Admin" )
       result=$(echo "Hostname: $HOSTNAME"; uptime)
       display_result "System Information"
       ;;
-    2 )
+    "Dominio" )
+      result=$(echo "Hostname: $HOSTNAME"; uptime)
+      display_result "System Information"
+      ;;
+    "Extensión" )
       result=$(df -h)
       display_result "Disk Space"
       ;;
-    3 )
+    "CSV" )
+      result=$(echo "Hostname: $HOSTNAME"; uptime)
+      display_result "System Information"
+      ;;
+    "Continuar" )
       if [[ $(id -u) -eq 0 ]]; then
         result=$(du -sh /home/* 2> /dev/null)
         display_result "Home Space Utilization (All Users)"
