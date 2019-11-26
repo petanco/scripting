@@ -122,7 +122,7 @@ function ldifShowFL(){
 }
 
 # What to do when every variable is set
-# Check if they are set and double check it before adding it to the LDAP
+# Check if they are set and double check it to user before adding it to the LDAP
 function continuar(){
 	ITEM="Salir"
 	if [ -z "$vAdmin" ]
@@ -142,7 +142,7 @@ function continuar(){
 			--title "[-- I N F O --]" \
 			--backtitle "$backtitle" \
 			--ok-label "Crear LDIF" \
-			--msgbox "Nombre del admin: $vAdmin
+			--msgbox " Nombre del admin: $vAdmin
 			Dominio: $vDominio.$vExtension
 			Ruta del CSV: $vCSV" 10 40
 		exit_status=$?
@@ -158,7 +158,7 @@ function continuar(){
 					then
 						# Get last uidNumber to begin adding from that one
 						getLast
-						
+
 						# Loop to create .ldif
 						ldif_loop
 
