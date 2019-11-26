@@ -37,7 +37,8 @@ function show_inputExtension(){
 }
 
 function show_inputCSV(){
-	dialog	--title "[-- C S V --]" \
+	dialog	-clear \
+		--title "[-- C S V --]" \
 		--backtitle "$backtitle" \
 		--ok-label "Aceptar" \
 		--cancel-label "Cancelar" \
@@ -161,7 +162,7 @@ while true; do
 	CSV)
     		show_inputCSV;;
 	Continuar)
-		echo "HOLA";;
+		continuar;;
 	Salir)
 		echo "Programa cerrado"; break;;
   esac
