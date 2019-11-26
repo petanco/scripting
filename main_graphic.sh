@@ -18,7 +18,7 @@ trap "rm -dr /tmp/parseador_ldif*; exit" SIGHUP SIGINT SIGTERM
 function show_input(){
 	dialog --title "[ D O M I N I O ]" \
 	--backtitle "Programa parseador" \
-	--inputbox "Escrbia el nombre del administrador del dominio " 8 60 2>$OUTPUT
+	--inputbox "Escrbia el nombre del administrador del dominio " 8 60 2>$vAdmin
 }
 # while menu dialog
 HEIGHT=0
@@ -40,18 +40,16 @@ while true; do
 
   case $selection in
     Admin)
-	echo "admin";;
-#	show_input;;
+	show_input;;
     Servidor)
 	show_input;;
     Extension)
 	show_input;;
     CSV)
-      result=$(echo "Hostname: $HOSTNAME"; uptime)
-      display_result "System Information"
+	
       ;;
     Continuar)
-	echo "HOLA"
+	
       ;;
 	Salir)
 		echo "Programa cerrado"; break;;
