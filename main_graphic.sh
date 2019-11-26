@@ -103,7 +103,7 @@ function ldifShowFL(){
 }
 
 function continuar(){
-	ITEM="Continuar"
+	ITEM="Salir"
 	if [ -z "$vAdmin" ]
 		then
 			error_nenough
