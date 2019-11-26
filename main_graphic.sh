@@ -35,11 +35,11 @@ while true; do
 	Extension "Indique nombre de la extensión del dominio" \
 	CSV "Indique la ubicación del fichero .csv con los datos" \
 	Continuar "Si ha rellenado todo, click aqui" \
-	Salir "Salir del programa" 2>$INPUT
+	Salir "Salir del programa" 2>"${INPUT}"
 
 	selection=$(<"${INPUT}")
 
-  case $INPUT in
+  case $selection in
     Admin)
 	show_input;;
     Dominio)
