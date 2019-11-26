@@ -32,7 +32,7 @@ function show_inputDominio(){
 function show_inputExtension(){
 	dialog --title "[ E X T E N S I O N ]" \
 	--backtitle "$backtitle" \
-	--inputbox "Escriba el nombre del administrador del dominio " 8 60 "${!vExtension}"\ 2>$INPUT
+	--inputbox "Escriba el nombre del administrador del dominio " 8 60 2>$INPUT
 	vExtension=$(cat $INPUT)
 }
 
@@ -136,8 +136,6 @@ function error_nenough() {
                 --backtitle "$backtitle" \
                 --msgbox "Falta información, comprueba las opciones" 7 40
 }
-
-function 
 
 # loop for menu
 while true; do
