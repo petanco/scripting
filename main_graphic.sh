@@ -141,8 +141,14 @@ function continuar(){
 							--backtitle "$backtitle" \
 							--exit-label "Atrás" \
 							--textbox /tmp/parseador_ldif.$$/first_last_entries 40 70
-
-						
+						#ldapadd -x -D cn=$vAdmin,dc=$vDominio,dc=$vExtension -W -f /tmp/parseador_ldif.$$/script_addUsers.ldif
+						slapcat > $OUTPUT
+						check_last=$(tail -44 $OUTPUT)
+						dialog  --clear \
+							--title "[ L A S T - C H E C K ]" \
+							--backtitle "$backtitle" \
+							--exit-label "Salir" \
+							--textbox $check_last 40 70					
 				fi
 		fi
 	fi
