@@ -3,15 +3,16 @@
 #Empty on purpose
 
 # carpeta temporal y variables
-$(rm -dr /tmp/parseador_ldif)
-$(mkdir /tmp/parseador_ldif)
+$(mkdir /tmp/parseador_ldif.$$)
+OUTPUT=/tmp/parseador_ldif.$$/output.$$
+INPUT=/tmp/parseador_ldif.$$/input.$$
 let vAdmin
 let vDominio
 let vExtension
 let vCSV
 
 # delete temp files if program closes
-trap "rm -dr /tmp/parseador_ldif; exit" SIGHUP SIGINT SIGTERM
+trap "rm -dr /tmp/parseador_ldif*; exit" SIGHUP SIGINT SIGTERM
 
 function show_input() {
 	dialog --title "[ D O M I N I O ]" \
@@ -31,20 +32,21 @@ display_result() {
 }
 
 # loop for menu
-while true; do
-	exec 3>&1
-	selection=$(dialog \
-		--backtitle "Programa parseador" \
-		--title "[ M E N U ]" \
-		--clear \
-		--cancel-label "Salir" \
-		--menu "Seleccione las siguientes opciones:"	$HEIGHT $WIDTH 5 \
-		"Admin" "Indique nombre del administrador el dominio" \
-		"Servidor" "Indique nombre del servidor" \
-		"Extensión" "Indique nombre de la extensión del dominio" \
-		"CSV" "Indique la ubicación del fichero .csv con los datos" \
-		"Continuar" "Si ha rellenado todo, click aqui" \
-	2>&1 1>&3)
+while true; do	
+	dialog \
+	--backtitle "Programa parseador" \
+	--title "[ M E N U ]" \
+	--clear \
+	--cancel-label "Salir" \
+	--menu "Seleccione las siguientes opciones:"	$HEIGHT $WIDTH 5 \
+	Admin "Indique nombre del administrador el dominio" \
+	Servidor "Indique nombre del servidor" \
+	Extension "Indique nombre de la extensión del dominio" \
+	CSV "Indique la ubicación del fichero .csv con los datos" \
+	Continuar "Si ha rellenado todo, click aqui" \	
+	
+	selection=$(<="${INPUT}")
+	
   exit_status=$?
   exec 3>&-
   case $exit_status in
@@ -65,22 +67,22 @@ while true; do
       echo "Program terminated."
 
       ;;
-    "Admin" )
+    Admin)
       show_input
 	;;
-    "Dominio" )
+    Dominio)
       result=$(echo "Hostname: $HOSTNAME"; uptime)
       display_result "System Information"
       ;;
-    "Extensión" )
+    Extensión)
       result=$(df -h)
       display_result "Disk Space"
       ;;
-    "CSV" )
+    CSV)
       result=$(echo "Hostname: $HOSTNAME"; uptime)
       display_result "System Information"
       ;;
-    "Continuar" )
+    Continuar)
       if [[ $(id -u) -eq 0 ]]; then
         result=$(du -sh /home/* 2> /dev/null)
         display_result "Home Space Utilization (All Users)"
