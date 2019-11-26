@@ -37,7 +37,7 @@ function show_inputExtension(){
 }
 
 function show_inputCSV(){
-	dialog	-clear \
+	dialog	--clear \
 		--title "[-- C S V --]" \
 		--backtitle "$backtitle" \
 		--ok-label "Aceptar" \
