@@ -14,83 +14,47 @@ let vCSV
 # delete temp files if program closes
 trap "rm -dr /tmp/parseador_ldif*; exit" SIGHUP SIGINT SIGTERM
 
-function show_input() {
+# functions declare
+
+function show_input(){
 	dialog --title "[ D O M I N I O ]" \
 	--backtitle "Programa parseador" \
 	--inputbox "Escrbia el nombre del administrador del dominio " 8 60 2>$vAdmin
 }
 # while menu dialog
-DIALOG_CANCEL=1
-DIALOG_ESC=255
 HEIGHT=0
 WIDTH=0
 
-display_result() {
-	dialog --title "$1" \
-		--no.collapse \
-		--msgbox "$result" 0 0
-}
-
 # loop for menu
-while true; do	
-	dialog \
-	--backtitle "Programa parseador" \
+while true; do
+	dialog --backtitle "Programa parseador" \
 	--title "[ M E N U ]" \
-	--clear \
-	--cancel-label "Salir" \
-	--menu "Seleccione las siguientes opciones:"	$HEIGHT $WIDTH 5 \
+	--menu "Seleccione las siguientes opciones:"	$HEIGHT $WIDTH 6 \
 	Admin "Indique nombre del administrador el dominio" \
 	Servidor "Indique nombre del servidor" \
 	Extension "Indique nombre de la extensión del dominio" \
 	CSV "Indique la ubicación del fichero .csv con los datos" \
-	Continuar "Si ha rellenado todo, click aqui" \	
-	
-	selection=$(<="${INPUT}")
-	
-  exit_status=$?
-  exec 3>&-
-  case $exit_status in
-    $DIALOG_CANCEL)
-      clear
-      echo "Programa terminado."
-      exit
-      ;;
-    $DIALOG_ESC)
-      clear
-      echo "Programa cancelado." >&2
-      exit 1
-      ;;
-  esac
-  case $selection in
-    0 )
-      clear
-      echo "Program terminated."
+	Continuar "Si ha rellenado todo, click aqui" \
+	Salir "Salir del programa" 2>"${INPUT}"
 
-      ;;
+	selection=$(<"${INPUT}")
+
+  case $selection in
     Admin)
-      show_input
-	;;
+	show_input;;
     Dominio)
-      result=$(echo "Hostname: $HOSTNAME"; uptime)
-      display_result "System Information"
-      ;;
-    Extensión)
-      result=$(df -h)
-      display_result "Disk Space"
-      ;;
+	show_input;;
+    Extension)
+	show_input;;
     CSV)
       result=$(echo "Hostname: $HOSTNAME"; uptime)
       display_result "System Information"
       ;;
     Continuar)
-      if [[ $(id -u) -eq 0 ]]; then
-        result=$(du -sh /home/* 2> /dev/null)
-        display_result "Home Space Utilization (All Users)"
-      else
-        result=$(du -sh $HOME 2> /dev/null)
-        display_result "Home Space Utilization ($USER)"
-      fi
+	echo "HOLA"
       ;;
+	Salir)
+		echo "Programa cerrado"; break;;
   esac
 done
 exit 0
