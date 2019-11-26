@@ -117,7 +117,7 @@ function ldifShowFL(){
 	dialog  --clear \
 		--title "[ L D I F ]" \
 		--backtitle "$backtitle" \
-		--exit-label "Atrás" \
+		--exit-label "Siguiente" \
 		--textbox /tmp/parseador_ldif.$$/first_last_entries 40 70
 }
 
