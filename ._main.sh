@@ -1,4 +1,7 @@
 #!/bin/bash
+# MAIN SCRIPT 'BACKEND'
+# USED TO TRY AND ERROR
+
 # Declarar variables que se van a pedir al usuario
   let admin
   let pre_dominio
