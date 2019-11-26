@@ -3,6 +3,7 @@
 #Empty on purpose
 
 # carpeta temporal y variables
+$(rm -dr /tmp/parseador_ldif)
 $(mkdir /tmp/parseador_ldif)
 let vAdmin
 let vDominio
@@ -65,8 +66,8 @@ while true; do
 
       ;;
     "Admin" )
-      show_input()
-      ;;
+      show_input
+	;;
     "Dominio" )
       result=$(echo "Hostname: $HOSTNAME"; uptime)
       display_result "System Information"
