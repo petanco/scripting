@@ -19,7 +19,7 @@ trap "rm -dr /tmp/parseador_ldif*; exit" SIGHUP SIGINT SIGTERM
 function show_inputAdmin(){
 	dialog --title "[ A D M I N ]" \
 	--backtitle "$backtitle" \
-	--inputbox "Escriba el nombre del administrador del dominio " 8 60 2>$INPUT
+	--inputbox "Escriba el nombre del administrador del dominio " 8 60 "$vAdmin" 2>$INPUT
 	vAdmin=$(cat $INPUT)
 	ITEM="Admin"
 }
@@ -27,7 +27,7 @@ function show_inputAdmin(){
 function show_inputDominio(){
 	dialog --title "[ D O M I N I O ]" \
 	--backtitle "$backtitle" \
-	--inputbox "Escriba el nombre del administrador del dominio " 8 60 2>$INPUT
+	--inputbox "Escriba el nombre del administrador del dominio " 8 60 "$vDominio" 2>$INPUT
 	vDominio=$(cat $INPUT)
 	ITEM="Dominio"
 }
@@ -35,7 +35,7 @@ function show_inputDominio(){
 function show_inputExtension(){
 	dialog --title "[ E X T E N S I O N ]" \
 	--backtitle "$backtitle" \
-	--inputbox "Escriba el nombre del administrador del dominio " 8 60 2>$INPUT
+	--inputbox "Escriba el nombre del administrador del dominio " 8 60 "$vExtension" 2>$INPUT
 	vExtension=$(cat $INPUT)
 	ITEM="Extension"
 }
@@ -91,9 +91,9 @@ function continuar(){
 				if  [ $answer_option -eq 0 ]
 					then
 						# get last uidNumber of ldap to start from that one
-							ldapsearch -H ldap://$vDominio.$vExtension -x -LLL -b "dc=$vDominio,dc=$vExtension" "(objectClass=posixAccount)" uidNumber > $OUTPUT
-							sed -i '/^$/d' $OUTPUT #borrar lineas en blanco
-							tail -1 $OUTPUT | cut -d' ' -f2- 2> $OUTPUT #borrar primera palabra
+							ldapsearch -H ldap://$vDominio.$vExtension -x -LLL -b "dc=$vDominio,dc=$vExtension" "(objectClass=posixAccount)" uidNumber > /tmp/parseador_ldif.$$/uid.$$
+							sed -i '/^$/d' /tmp/parseador_ldif.$$/uid.$$ #borrar lineas en blanco
+							tail -1 /tmp/parseador_ldif.$$/uid.$$ | cut -d' ' -f2- 2> $OUTPUT #borrar primera palabra
 							number_uid_last=$(cat $OUTPUT)
 							((number_uid_last=$number_uid_last+1))
 						# end_last_uidNumber
