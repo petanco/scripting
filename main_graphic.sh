@@ -2,17 +2,20 @@
 #Programa con interfaz grafica para el usuario %DUMB%
 #Empty on purpose
 
-# carpeta temporal y varialbe
-OUTPUT="/tmp/parseador_ldif/input"
->$OUTPUT
+# carpeta temporal y variables
+$(mkdir /tmp/parseador_ldif)
+let vAdmin
+let vDominio
+let vExtension
+let vCSV
 
 # delete temp files if program closes
-trap "rm $OUTPUT; exit" SIGHUP SIGINT SIGTERM
+trap "rm -dr /tmp/parseador_ldif; exit" SIGHUP SIGINT SIGTERM
 
 function show_input() {
 	dialog --title "[ D O M I N I O ]" \
 	--backtitle "Programa parseador" \
-	--inputbox "Escrbia el nombre del administrador del dominio " 8 60 2>$OUTPUT
+	--inputbox "Escrbia el nombre del administrador del dominio " 8 60 2>$vAdmin
 }
 # while menu dialog
 DIALOG_CANCEL=1
