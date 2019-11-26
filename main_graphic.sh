@@ -94,6 +94,7 @@ function ldifShowFL(){
 	last_entryLDIF=$(tail -14 /tmp/parseador_ldif.$$/first_last_entries_Before >> /tmp/parseador_ldif.$$/first_last_entries) # Show last entry
 	echo "" >> /tmp/parseador_ldif.$$/first_last_entries
 	echo "[ENTRADAS TOTALES DEL .ldif]" >> /tmp/parseador_ldif.$$/first_last_entries
+	$(grep -c ^$ /tmp/parseador_ldif.$$/script_addUsers.ldif >> /tmp/parseador_ldif.$$/first_last_entries)
 	dialog  --clear \
 		--title "[ L D I F ]" \
 		--backtitle "$backtitle" \
@@ -141,9 +142,6 @@ function continuar(){
 						
 						# Show first & last ldif entries
 						ldifShowFL
-						
-						# Total entries in .ldif to be added
-						$(grep -c ^$ /tmp/parseador_ldif.$$/script_addUsers.ldif >> /tmp/parseador_ldif.$$/first_last_entries)
 												
 						# Add entries to LDAP
 						#ldapadd -x -D cn=$vAdmin,dc=$vDominio,dc=$vExtension -W -f /tmp/parseador_ldif.$$/script_addUsers.ldif
