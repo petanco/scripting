@@ -59,7 +59,7 @@ function getLast(){
 	((number_uid_last=$number_uid_last+1))
 }
 
-function ldip_loop(){
+function ldif_loop(){
 	IFS=';'
 	[ ! -f $vCSV ] && { echo "$vCSV file not found"; exit 99; }
 	while read num usuario unidad_organizativa descripcion
