@@ -21,6 +21,7 @@ function show_inputAdmin(){
 	--backtitle "$backtitle" \
 	--inputbox "Escriba el nombre del administrador del dominio " 8 60 2>$INPUT
 	vAdmin=$(cat $INPUT)
+	ITEM="Admin"
 }
 
 function show_inputDominio(){
@@ -28,6 +29,7 @@ function show_inputDominio(){
 	--backtitle "$backtitle" \
 	--inputbox "Escriba el nombre del administrador del dominio " 8 60 2>$INPUT
 	vDominio=$(cat $INPUT)
+	ITEM="Dominio"
 }
 
 function show_inputExtension(){
@@ -35,6 +37,7 @@ function show_inputExtension(){
 	--backtitle "$backtitle" \
 	--inputbox "Escriba el nombre del administrador del dominio " 8 60 2>$INPUT
 	vExtension=$(cat $INPUT)
+	ITEM="Extension"
 }
 
 function show_inputCSV(){
@@ -45,6 +48,7 @@ function show_inputCSV(){
 		--cancel-label "Cancelar" \
 		--fselect $HOME/ 14 48 2>$INPUT
         vCSV=$(cat $INPUT)
+	ITEM="CSV"
 }
 
 function show_inputPassword(){
@@ -155,6 +159,7 @@ function error_nenough() {
 while true; do
 	dialog --backtitle "$backtitle" \
 	--title "[ M E N U ]" \
+	--default-item "$ITEM" \
 	--menu "Seleccione las siguientes opciones:"	0 0 6 \
 	Admin "Indique nombre del administrador el dominio" \
 	Dominio "Indique nombre del servidor" \
