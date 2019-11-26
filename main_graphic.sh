@@ -3,9 +3,9 @@
 #description     :This script will add users to an active LDAP server using a .csv file as origin of users
 #author		 :Leandro Galípolo Uriarte
 #date            :20191126
-#version         :1    
+#version         :1.0
 #usage		 :bash
-#notes           :Install package dialoge | Have an active LDAP server
+#notes           :Install package 'dialoge' | Have an active LDAP server
 #bash_version    :4.1.5(1)-release
 #===========================================================================================================
 
