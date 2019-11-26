@@ -2,6 +2,18 @@
 #Programa con interfaz grafica para el usuario %DUMB%
 #Empty on purpose
 
+# carpeta temporal y varialbe
+OUTPUT="/tmp/parseador_ldif/input"
+>$OUTPUT
+
+# delete temp files if program closes
+trap "rm $OUTPUT; exit" SIGHUP SIGINT SIGTERM
+
+function show_input() {
+	dialog --title "[ D O M I N I O ]" \
+	--backtitle "Programa parseador" \
+	--inputbox "Escrbia el nombre del administrador del dominio " 8 60 2>$OUTPUT
+}
 # while menu dialog
 DIALOG_CANCEL=1
 DIALOG_ESC=255
@@ -50,8 +62,7 @@ while true; do
 
       ;;
     "Admin" )
-      result=$(echo "Hostname: $HOSTNAME"; uptime)
-      display_result "System Information"
+      show_input()
       ;;
     "Dominio" )
       result=$(echo "Hostname: $HOSTNAME"; uptime)
