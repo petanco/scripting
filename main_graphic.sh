@@ -40,7 +40,7 @@ while true; do
 
   case $selection in
     Admin)
-	show_input;;
+	show_input "Admin OpenLDAP" "Pon el nombre del administrador del dominio:" "admin_name";;
     Dominio)
 	show_input;;
     Extension)
