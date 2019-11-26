@@ -1,7 +1,16 @@
 #!/bin/bash
-#Script with user interface to automatically add users to LDAP from a curated csv
+#title           :script_CSV-LDIF
+#description     :This script will add users to an active LDAP server using a .csv file as origin of users
+#author		 :Leandro Galípolo Uriarte
+#date            :20191126
+#version         :1    
+#usage		 :bash
+#notes           :Install package dialoge | Have an active LDAP server
+#bash_version    :4.1.5(1)-release
+#===========================================================================================================
 
 # Temp folder and variables
+# Name some variables and create temporary folder and files to use
 $(mkdir /tmp/parseador_ldif.$$)
 OUTPUT=/tmp/parseador_ldif.$$/output.$$
 INPUT=/tmp/parseador_ldif.$$/input.$$
@@ -12,10 +21,12 @@ let vCSV
 let vPassword
 backtitle="Programa parseador"
 
-# delete temp files if program closes
+# Delete temp files if program is closed or closes
 trap "rm -dr /tmp/parseador_ldif*; exit" SIGHUP SIGINT SIGTERM
 
-# functions declare
+# Functions to be used in the script will be put here
+
+# Admin input dialog
 function show_inputAdmin(){
 	dialog --title "[ A D M I N ]" \
 	--backtitle "$backtitle" \
@@ -24,6 +35,7 @@ function show_inputAdmin(){
 	ITEM="Admin"
 }
 
+# Domain input dialog
 function show_inputDominio(){
 	dialog --title "[ D O M I N I O ]" \
 	--backtitle "$backtitle" \
@@ -32,6 +44,7 @@ function show_inputDominio(){
 	ITEM="Dominio"
 }
 
+# Extent input dialog
 function show_inputExtension(){
 	dialog --title "[ E X T E N S I O N ]" \
 	--backtitle "$backtitle" \
@@ -40,6 +53,7 @@ function show_inputExtension(){
 	ITEM="Extension"
 }
 
+# CSV file selection dialog
 function show_inputCSV(){
 	dialog	--clear \
 		--title "[-- C S V --]" \
@@ -51,6 +65,8 @@ function show_inputCSV(){
 	ITEM="CSV"
 }
 
+# Commands to get the uidNumber of last added user.
+# We will use it to be the prior to our first one.
 function getLast(){
 	ldapsearch -H ldap://$vDominio.$vExtension -x -LLL -b "dc=$vDominio,dc=$vExtension" "(objectClass=posixAccount)" uidNumber > /tmp/parseador_ldif.$$/uid_number_full.$$
 	sed -i '/^$/d' /tmp/parseador_ldif.$$/uid_number_full.$$ #borrar lineas en blanco
@@ -59,6 +75,7 @@ function getLast(){
 	((number_uid_last=$number_uid_last+1))
 }
 
+# Loop to read each line in the CSV file
 function ldif_loop(){
 	IFS=';'
 	[ ! -f $vCSV ] && { echo "$vCSV file not found"; exit 99; }
@@ -84,6 +101,8 @@ function ldif_loop(){
 	      done <$vCSV
 }
 
+# Commands to get the first and the last .ldif entries
+# Output is a dialog
 function ldifShowFL(){
 	$(cp /tmp/parseador_ldif.$$/script_addUsers.ldif /tmp/parseador_ldif.$$/first_last_entries_Before) # Copy to avoid using .ldif
 	sed -i '/^$/d' /tmp/parseador_ldif.$$/first_last_entries_Before # Delete empty spaces or lines
@@ -102,6 +121,8 @@ function ldifShowFL(){
 		--textbox /tmp/parseador_ldif.$$/first_last_entries 40 70
 }
 
+# What to do when every variable is set
+# Check if they are set and double check it before adding it to the LDAP
 function continuar(){
 	ITEM="Salir"
 	if [ -z "$vAdmin" ]
@@ -159,6 +180,7 @@ function continuar(){
 	fi
 }
 
+# If variables are not set and continuar happens, error return
 function error_nenough() {
         dialog  --clear \
                 --title "[-- I N F O --]" \
@@ -166,7 +188,8 @@ function error_nenough() {
                 --msgbox "Falta información, comprueba las opciones" 7 40
 }
 
-# loop for menu
+# Main loop of the program
+#------------------------------ MAIN MENU ------------------------------
 while true; do
 	dialog --backtitle "$backtitle" \
 	--title "[ M E N U ]" \
