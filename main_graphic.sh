@@ -166,7 +166,7 @@ function continuar(){
 						ldifShowFL
 
 						# Add entries to LDAP
-						# ldapadd -x -D cn=$vAdmin,dc=$vDominio,dc=$vExtension -W -f /tmp/parseador_ldif.$$/script_addUsers.ldif
+						ldapadd -x -D cn=$vAdmin,dc=$vDominio,dc=$vExtension -W -f /tmp/parseador_ldif.$$/script_addUsers.ldif
 
 						# Show last two added LDAP users
 						slapcat | tail -44 > $OUTPUT
