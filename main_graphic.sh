@@ -145,13 +145,12 @@ function continuar(){
 						if  [ $answer_option -eq 0 ] 
 							then
 								#ldapadd -x -D cn=$vAdmin,dc=$vDominio,dc=$vExtension -W -f /tmp/parseador_ldif.$$/script_addUsers.ldif
-								slapcat > /tmp/parseador_ldif.$$/slpcat_check.$$
-								check_last=$(tail -44 /tmp/parseador_ldif.$$/slpcat_check.$$)
+								slapcat > /tmp/parseador_ldif.$$/slpcat_check.$$								
 								dialog  --clear \
 									--title "[ L A S T - C H E C K ]" \
 									--backtitle "$backtitle" \
 									--exit-label "Salir" \
-									--textbox $check_last 40 70
+									--textbox $(tail -44 /tmp/parseador_ldif.$$/slpcat_check.$$) 40 70
 						fi
 				fi
 		fi
