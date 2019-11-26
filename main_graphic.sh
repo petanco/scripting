@@ -103,6 +103,7 @@ function ldifShowFL(){
 }
 
 function continuar(){
+	ITEM="Continuar"
 	if [ -z "$vAdmin" ]
 		then
 			error_nenough
@@ -139,20 +140,20 @@ function continuar(){
 						
 						# Loop to create .ldif
 						ldif_loop
-						
+
 						# Show first & last ldif entries
 						ldifShowFL
-												
+
 						# Add entries to LDAP
-						#ldapadd -x -D cn=$vAdmin,dc=$vDominio,dc=$vExtension -W -f /tmp/parseador_ldif.$$/script_addUsers.ldif
-						
+						# ldapadd -x -D cn=$vAdmin,dc=$vDominio,dc=$vExtension -W -f /tmp/parseador_ldif.$$/script_addUsers.ldif
+
 						# Show last two added LDAP users
-						ldap_check=$(slapcat | tail -44)
+						slapcat | tail -44 > $OUTPUT
 						dialog  --clear \
 							--title "[ L A S T - C H E C K ]" \
 							--backtitle "$backtitle" \
 							--exit-label "Salir" \
-							--textbox $ldap_check 40 70
+							--textbox $OUTPUT 40 40
 				fi
 		fi
 	fi
