@@ -9,6 +9,7 @@ let vAdmin
 let vDominio
 let vExtension
 let vCSV
+let vPassword
 backtitle="Programa parseador"
 
 # delete temp files if program closes
@@ -44,6 +45,13 @@ function show_inputCSV(){
 		--cancel-label "Cancelar" \
 		--fselect $HOME/ 14 48 2>$INPUT
         vCSV=$(cat $INPUT)
+}
+
+function show_inputPassword(){
+	dialog --title "[ P A S S W O R D ]" \
+	--backtitle "$backtitle" \
+	--inputbox "Escriba el nombre del administrador del dominio " 8 60 2>$INPUT
+	vAdmin=$(cat $INPUT)
 }
 
 function continuar(){
