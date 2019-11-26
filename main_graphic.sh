@@ -1,7 +1,7 @@
 #!/bin/bash
-#Programa con interfaz grafica para el usuario %DUMB%
+#Script with user interface to automatically add users to LDAP from a curated csv
 
-# carpeta temporal y variables
+# Temp folder and variables
 $(mkdir /tmp/parseador_ldif.$$)
 OUTPUT=/tmp/parseador_ldif.$$/output.$$
 INPUT=/tmp/parseador_ldif.$$/input.$$
@@ -10,11 +10,11 @@ let vDominio
 let vExtension
 let vCSV
 backtitle="Programa parseador"
+
 # delete temp files if program closes
 trap "rm -dr /tmp/parseador_ldif*; exit" SIGHUP SIGINT SIGTERM
 
 # functions declare
-
 function show_inputAdmin(){
 	dialog --title "[ A D M I N ]" \
 	--backtitle "$backtitle" \
@@ -42,9 +42,10 @@ function show_inputCSV(){
 		--backtitle "$backtitle" \
 		--ok-label "Aceptar" \
 		--cancel-label "Cancelar" \
-		--fselect $HOME/ 14 48 \ 2>$INPUT
+		--fselect $HOME/ 14 48 2>$INPUT
         vCSV=$(cat $INPUT)
 }
+
 function continuar(){
 	if [ -z "$vAdmin" ]
 		then
@@ -63,7 +64,7 @@ function continuar(){
 			--title "[-- I N F O --]" \
 			--backtitle "$backtitle" \
 			--ok-label "Crear LDIF" \
-			--msgbox " Nombre del admin: $vAdmin
+			--msgbox "Nombre del admin: $vAdmin
 			Dominio: $vDominio.$vExtension
 			Ruta del CSV: $vCSV" 10 40
 		exit_status=$?
@@ -81,11 +82,11 @@ function continuar(){
 							ldapsearch -H ldap://$vDominio.$vExtension -x -LLL -b "dc=$vDominio,dc=$vExtension" "(objectClass=posixAccount)" uidNumber 2> $OUTPUT
 							sed -i '/^$/d' $OUTPUT #borrar lineas en blanco
 							tail -1 $OUTPUT | cut -d' ' -f2- 2> $OUTPUt #borrar primera palabra
-							number_uid_last=$(cat $OUTPUT)						
+							number_uid_last=$(cat $OUTPUT)
 							((number_uid_last=$number_uid_last+1))
 						# end_last_uidNumber
 
-						# loop to create .ldif						
+						# loop to create .ldif
 						IFS=';'
 						[ ! -f $vCSV ] && { echo "$vCSV file not found"; exit 99; }
 						while read num usuario unidad_organizativa descripcion
@@ -107,25 +108,29 @@ function continuar(){
 							echo "description: $descripcion" >> /tmp/parseador_ldif.$$/script_addUsers.ldif
 							printf "\n" >> /tmp/parseador_ldif.$$/script_addUsers.ldif
 							((number_uid_last=$number_uid_last+1))
-						      done <$vCSV						      
-						# loop end	
+						      done <$vCSV
+						# loop end
 						# show first & last ldif entries
 							$(cp /tmp/parseador_ldif.$$/script_addUsers.ldif /tmp/parseador_ldif.$$/first_last_entries_Before)
 							sed -i '/^$/d' /tmp/parseador_ldif.$$/first_last_entries_Before
 							echo "[PRIMERA ENTRADA DEL .ldif]" >> /tmp/parseador_ldif.$$/first_last_entries
 							$(head -14 /tmp/parseador_ldif.$$/first_last_entries_Before >> /tmp/parseador_ldif.$$/first_last_entries)
 							echo "" >> /tmp/parseador_ldif.$$/first_last_entries
+							echo "[ULTIMA ENTRADA DEL .ldif]" >> /tmp/parseador_ldif.$$/first_last_entries
 							last_entryLDIF=$(tail -14 /tmp/parseador_ldif.$$/first_last_entries_Before >> /tmp/parseador_ldif.$$/first_last_entries)
 							echo "" >> /tmp/parseador_ldif.$$/first_last_entries
+							echo "[ENTRADAS TOTALES DEL .ldif]" >> /tmp/parseador_ldif.$$/first_last_entries
 							# count entries to be added
 								$(grep -c ^$ /tmp/parseador_ldif.$$/script_addUsers.ldif >> /tmp/parseador_ldif.$$/first_last_entries)					
-							#end count							
+							#end count
 						#end show first & last
 						dialog  --clear \
 							--title "[ L D I F ]" \
 							--backtitle "$backtitle" \
 							--exit-label "Atrás" \
-							--textbox /tmp/parseador_ldif/first_last_entries 40 70
+							--textbox /tmp/parseador_ldif.$$/first_last_entries 40 70
+
+						
 				fi
 		fi
 	fi
