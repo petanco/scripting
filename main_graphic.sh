@@ -32,13 +32,15 @@ function show_inputDominio(){
 function show_inputExtension(){
 	dialog --title "[ E X T E N S I O N ]" \
 	--backtitle "parse" \
-	--inputbox "Escriba el nombre del administrador del dominio " 8 60 2>$OUTPUT
+	--inputbox "Escriba el nombre del administrador del dominio " 8 60 "${!vExtension}"\ 2>$OUTPUT
 	vExtension=$(cat $OUTPUT)
 }
 
 function show_inputCSV(){
 	dialog	--title "[-- C S V --]" \
 		--backtitle "parse" \
+		--ok-label "Aceptar" \
+		--cancel-label "Cancelar" \
 		--fselect $HOME/ 14 48 \ 2>$OUTPUT
         vCSV=$(cat $OUTPUT)
 }
