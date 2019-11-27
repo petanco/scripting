@@ -16,5 +16,21 @@ Bash based script that, inputting some information and a .CSV curated file, is a
   
   7- Show the user the last two user details so he/she can assure that the command has been run correctly  
   
+You need csv_to_ldap.sh and ldifCSV.csv files to run the script.
+
+Run csv_to_ldap.sh and follow instructions.
+
+To use your own .csv:
+
+  - It must have 4 columns separated with semicolon ';'
+  
+  - The first column can be anything, for example a number for each entry but it is not used in the proccess.
+  
+  - Second column the uid name. It can´t have spaces
+  
+  - Third column is the Organizational Unit. It must be created manually before running the program
+  
+  - Fourth and last column is for User details.
+  
   
 Enjoy :)
