@@ -1,15 +1,8 @@
-dn: uid=pepe, ou=nunavut,dc=vitoria,dc=gasteiz
-objectClass: inetOrgPerson
-objectClass: posixAccount
-objectClass: shadowAccount
-cn: pepe
-sn:  pepe
-uid:  pepe
-uidNumber: 5
-gidNumber: 1
-userPassword:  pepe
-homeDirectory: /home/ pepe
-loginShell: /bin/bash
-gecos:  pepe
-description: User account
-# File to try succes addition before implementing to script
+dn: ou=nunavut,dc=vitoria,dc=gasteiz
+objectClass: organizationalUnit
+ou: nunavut
+
+dn: ou=Northwest_Territories,dc=vitoria,dc=gasteiz
+objectClass: organizationalUnit
+ou: Northwest_Territories
+
